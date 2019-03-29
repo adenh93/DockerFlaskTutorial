@@ -5,4 +5,6 @@ class ProdConfig(Config):
     pass 
  
 class DevConfig(Config): 
-    DEBUG = True 
+    DEBUG = True
+    SQLALCHEMY_DATABASE_URI = "sqlite:///temp/TestDatabase.db" 
+    SQLALCHEMY_ECHO = True
