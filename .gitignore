@@ -1,0 +1,8 @@
+*.pyc
+*.pem
+*.pub
+*.tar.gz
+*.db
+./tmp
+./build/*
+env
