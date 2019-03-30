@@ -9,7 +9,7 @@ db = SQLAlchemy(app)
 
 class User(db.Model): 
   id = db.Column(db.Integer(), primary_key=True) 
-  username = db.Column(db.String(255), nullable=False) 
+  username = db.Column(db.String(255), nullable=False, index=True, unique=True) 
   password = db.Column(db.String(255))
   blogs = db.relationship(
     'Blog',
@@ -20,7 +20,7 @@ class User(db.Model):
 class Blog(db.Model):
   id = db.Column(db.Integer(), primary_key=True)
   title = db.Column(db.String(255), nullable=False)
-  created_date = db.Column(db.DateTime(), default=datetime.now())
+  created_date = db.Column(db.DateTime(), default=datetime.now)
   user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
   posts = db.relationship(
     'Post',
@@ -37,7 +37,7 @@ class Post(db.Model):
   id = db.Column(db.Integer(), primary_key=True)
   title = db.Column(db.String(255), nullable=False)
   body = db.Column(db.Text())
-  created_date = db.Column(db.DateTime(), default=datetime.now())
+  created_date = db.Column(db.DateTime(), default=datetime.now)
   blog_id = db.Column(db.Integer(), db.ForeignKey('blog.id'))
   comments = db.relationship(
     'Comment',
@@ -52,15 +52,15 @@ class Post(db.Model):
 
 class Comment(db.Model):
   id = db.Column(db.Integer(), primary_key=True)
-  name = db.Column(db.String(255))
-  title = db.Column(db.String(255))
+  name = db.Column(db.String(255), nullable=False)
+  title = db.Column(db.String(255), nullable=False)
   body = db.Column(db.Text())
-  created_date = db.Column(db.DateTime(), default=datetime.now())
+  created_date = db.Column(db.DateTime(), default=datetime.now)
   post_id = db.Column(db.Integer(), db.ForeignKey('post.id'))
 
 class Tag(db.Model):
   id = db.Column(db.Integer(), primary_key=True)
-  title = db.Column(db.String(255))
+  title = db.Column(db.String(255), nullable=False, unique=True)
 
   def __init__(self, title):
     self.title = title
