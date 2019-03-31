@@ -1,0 +1,50 @@
+@font-face {
+    font-family: 'BebasNeue-Book';
+    src: url('../fonts/BebasNeue-Regular.ttf') format('truetype');
+}
+
+.body {
+    background-color: #f9f8fd; 
+}
+
+.container {
+    margin: 0 auto;
+}
+
+.site-header {
+    color: white;
+    font-family: 'BebasNeue-Book', Fallback, sans-serif;
+    letter-spacing: 3px;
+}
+
+.header-bar {
+    background-color: #393f4d; 
+    padding:20px 10px;
+}
+
+.nav-bar {
+    background-color: #1d1e22; 
+    padding:5px 10px;
+}
+
+.content {
+    padding:10px;
+}
+
+.post-card {
+    border:none; 
+    padding:0 10px; 
+    background:none;
+}
+
+.post-card .card-content {
+    box-shadow: 1px 1px #d5d5d5;
+}
+
+.post-card .card-img-top {
+    height: 350px;
+}
+
+.post-card .card-body {
+    background-color: #fefeff;
+}
