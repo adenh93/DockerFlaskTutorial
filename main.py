@@ -27,31 +27,22 @@ tags = db.Table('post_tags',
 
 class User(db.Model): 
   id = db.Column(db.Integer(), primary_key=True) 
-  username = db.Column(db.String(255), nullable=False, index=True, unique=True) 
+  username = db.Column(db.String(255), nullable=False, index=True, unique=True)
+  email = db.Column(db.String(255), nullable=False, unique=True) 
+  name = db.Column(db.String(255), nullable=False)
   password = db.Column(db.String(255))
-  blogs = db.relationship(
-    'Blog',
+  posts = db.relationship(
+    'Post',
     backref='user',
     lazy='dynamic'
   ) 
-
-class Blog(db.Model):
-  id = db.Column(db.Integer(), primary_key=True)
-  title = db.Column(db.String(255), nullable=False)
-  created_date = db.Column(db.DateTime(), default=datetime.now)
-  user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
-  posts = db.relationship(
-    'Post',
-    backref='blog',
-    lazy='dynamic'
-  )
 
 class Post(db.Model):
   id = db.Column(db.Integer(), primary_key=True)
   title = db.Column(db.String(255), nullable=False)
   body = db.Column(db.Text())
   created_date = db.Column(db.DateTime(), default=datetime.now)
-  blog_id = db.Column(db.Integer(), db.ForeignKey('blog.id'))
+  user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
   comments = db.relationship(
     'Comment',
     backref='post',
@@ -89,7 +80,7 @@ def sidebar_data():
 @app.route('/')
 @app.route('/<int:page>')
 def home(page=1):
-  posts = Post.query.order_by(Post.created_date.desc()).paginate(page, app.config.get('POSTS_PER_PAGE', 10), False)
+  posts = Post.query.order_by(Post.created_date.desc()).paginate(page, app.config.get('POSTS_PER_PAGE', 15), False)
   recent, top_tags = sidebar_data()
   return render_template(
     'home.html',

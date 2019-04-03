@@ -1,0 +1,29 @@
+{% extends "master.html" %}
+{% block title %}Post{% endblock %}
+
+{% block leftbody %}
+    <div class="post-container">
+        <div class="post-content col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <p><small>{{post.created_date.strftime('%B %d, %Y')}}</small></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>{{post.title}}</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p><small>By ADEN HEROLD</small></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p>{{post.body | safe}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

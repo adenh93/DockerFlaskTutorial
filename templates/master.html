@@ -7,24 +7,24 @@
     <title>{% block title %}Blog{% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
-    <link rel="stylesheet" href="static/style/site-style.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/site-style.css')}}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"> 
 </head>
 <body>
 <div class="container col-md-12">
     <div class="row">
-        <div class="col col-md-12">
-        {% block head %}
-            <div class="container header-bar col-md-12">
-                <h1><a class="site-header" href="{{ url_for('home') }}">Mock Blog</a></h1>
-            </div>
-        {% endblock %}
-        </div>
-    </div>
-    <div class="row">
         <div class="col-md-12">
-            <div class="container nav-bar col-md-12">
-                <p><a class="text-white" href="{{ url_for('home') }}">Nav will go here</a></p>
-            </div>
+            <nav class="navbar navbar-expand-sm navbar-dark">
+                <a class="navbar-brand navbar-center site-header" href="{{ url_for('home') }}">Mock Blog</a></a>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Recent</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Login</a>
+                    </li>
+                </ul>
+            </nav>
             {# {% include 'navbar.html' %} #}
         </div>
     </div>
@@ -32,20 +32,17 @@
         {# {% include 'messages.html' %} #}
         {% block body %}
             <div class="row">
-                <div class="col-lg-9">
+                <div class="col-md-12">
                     {% block leftbody %}
                     {% endblock %}
                 </div>
-                <div class="col-lg-3 rounded" style="border: 1px solid lightgray">
+                <!-- <div class="col-lg-3 rounded">
                     {% block rightbody %}
-                        {# {% include 'rightbody.html' %} #}
+                        {% include 'rightbody.html' %}
                     {% endblock %}
-                </div>
+                </div> -->
             </div>
         {% endblock %}
-    </div>
-    <div>
-        <p>Flask Tutorial - 2019</p>
     </div>
 </div>
 </body>
