@@ -1,3 +1,4 @@
 flask-sqlalchemy
 Flask-Migrate
+Flask-WTF
 Faker

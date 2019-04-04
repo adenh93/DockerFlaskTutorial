@@ -2,6 +2,9 @@ from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData, func
 from flask_migrate import Migrate
+from flask_wtf import FlaskForm as Form
+from wtforms import StringField, TextAreaField
+from wtforms.validators import DataRequired, Length
 from config import DevConfig
 from datetime import datetime
  
@@ -24,6 +27,17 @@ tags = db.Table('post_tags',
     db.Column('post_id', db.Integer, db.ForeignKey('post.id')), 
     db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')) 
 ) 
+
+class CommentForm(Form):
+  name = StringField(
+    'Name',
+    validators=[DataRequired(), Length(max=255)]
+  )
+  text = TextAreaField(
+    'Comment',
+    validators=[DataRequired()]
+  )
+
 
 class User(db.Model): 
   id = db.Column(db.Integer(), primary_key=True) 
@@ -89,15 +103,34 @@ def home(page=1):
     top_tags=top_tags
   )
 
-@app.route('/post/<int:post_id>')
+@app.route('/post/<int:post_id>', methods=('GET', 'POST'))
 def post(post_id):
+  form = CommentForm()
+  if form.validate_on_submit():
+    comment = Comment()
+    comment.name = form.name.data
+    comment.body = form.body.data
+    comment.post_id = post_id
+    try:
+      db.session.add(comment)  
+      db.session.commit()
+    except Exception as e:
+      flash('Error adding comment %s' % str(e), 'error')
+      db.session.rollback()
+    else:
+      flash('Comment added successfully', 'info')
+    return redirect(url_for('post', post_id=post_id))
+
   post = Post.query.get_or_404(post_id)
+  comments = post.comments.order_by(Comment.created_date.desc()).all()
   recent, top_tags = sidebar_data()
   return render_template(
     'post.html',
     post=post,
     recent=recent,
-    top_tags=top_tags
+    top_tags=top_tags,
+    comments=comments,
+    form=form
   )
 
 @app.route('/posts_by_tag/<string:tag_name>')
