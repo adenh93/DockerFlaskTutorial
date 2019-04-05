@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData, func
 from flask_migrate import Migrate
@@ -33,7 +33,11 @@ class CommentForm(Form):
     'Name',
     validators=[DataRequired(), Length(max=255)]
   )
-  text = TextAreaField(
+  title = StringField(
+    'Title',
+    validators=[DataRequired(), Length(max=255)]
+  )
+  body = TextAreaField(
     'Comment',
     validators=[DataRequired()]
   )
@@ -109,6 +113,7 @@ def post(post_id):
   if form.validate_on_submit():
     comment = Comment()
     comment.name = form.name.data
+    comment.title = form.title.data
     comment.body = form.body.data
     comment.post_id = post_id
     try:

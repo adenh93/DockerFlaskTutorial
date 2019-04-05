@@ -74,9 +74,13 @@
 .post-content {
     padding: 1% 10%;
     text-align: center;
-    background-color: white;
-    border: 1px solid lightgrey;
-    border-radius: 3px;
-    box-shadow: 2px 2px 10px 5px rgba(150, 150, 150, 0.5);
 }
 
+.post-content, .comment-container {
+    background-color: white;
+    border-radius: 3px;
+}
+
+.comment-container {
+    margin-top: 10px;
+}
