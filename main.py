@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, flash, redirect, url_for
+from flask import Flask, Blueprint, request, render_template, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData, func
 from flask_migrate import Migrate
@@ -88,27 +88,27 @@ class Tag(db.Model):
   def __init__(self, title):
     self.title = title
 
-def sidebar_data():
-  recent = Post.query.order_by(Post.created_date.desc()).limit(5).all()
-  top_tags = db.session.query(
-    Tag, func.count(tags.c.post_id).label('total')
-  ).join(tags).group_by(Tag).limit(5).all()
-
-  return recent, top_tags
+blog_blueprint = Blueprint(
+  'blog',
+  __name__,
+  template_folder='templates/blog',
+  url_prefix="/blog"
+)
 
 @app.route('/')
-@app.route('/<int:page>')
+def index():
+  return redirect(url_for('blog.home'))
+
+@blog_blueprint.route('/')
+@blog_blueprint.route('/<int:page>')
 def home(page=1):
   posts = Post.query.order_by(Post.created_date.desc()).paginate(page, app.config.get('POSTS_PER_PAGE', 15), False)
-  recent, top_tags = sidebar_data()
   return render_template(
     'home.html',
-    posts=posts,
-    recent=recent,
-    top_tags=top_tags
+    posts=posts
   )
 
-@app.route('/post/<int:post_id>', methods=('GET', 'POST'))
+@blog_blueprint.route('/post/<int:post_id>', methods=('GET', 'POST'))
 def post(post_id):
   form = CommentForm()
   if form.validate_on_submit():
@@ -125,50 +125,43 @@ def post(post_id):
       db.session.rollback()
     else:
       flash('Comment added successfully', 'info')
-    return redirect(url_for('post', post_id=post_id))
+    return redirect(url_for('blog.post', post_id=post_id))
 
   post = Post.query.get_or_404(post_id)
   comments = post.comments.order_by(Comment.created_date.desc()).all()
-  recent, top_tags = sidebar_data()
   return render_template(
     'post.html',
     post=post,
-    recent=recent,
-    top_tags=top_tags,
     comments=comments,
     timeago=timeago,
     form=form
   )
 
-@app.route('/posts_by_tag/<string:tag_name>')
+@blog_blueprint.route('/posts_by_tag/<string:tag_name>')
 def posts_by_tag(tag_name):
   tag = Tag.query.filter_by(title=tag_name).first_or_404()
   posts = tag.posts.order_by(Post.created_date.desc()).all()
-  recent, top_tags = sidebar_data()
   return render_template(
     'tag.html',
     tag=tag,
-    posts=posts,
-    recent=recent,
-    top_tags=top_tags
+    posts=posts
   )
 
-@app.route('/posts_by_user/<string:username>')
+@blog_blueprint.route('/posts_by_user/<string:username>')
 def posts_by_user(username):
   user = User.query.filter_by(username=username).first_or_404()
   posts = user.posts.order_by(Post.created_date.desc()).all()
-  recent, top_tags = sidebar_data()
   return render_template(
     'user.html',
     user=user,
-    posts=posts,
-    recent=recent,
-    top_tags=top_tags
+    posts=posts
   )
 
 @app.errorhandler(404)
 def page_not_found(error):
-  return render_template('404.html'), 404
+  return render_template('blog/404.html'), 404
+
+app.register_blueprint(blog_blueprint)
 
 if __name__ == '__main__':
     app.run()
