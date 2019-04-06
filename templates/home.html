@@ -1,7 +1,7 @@
 {% extends "master.html" %}
 {% import 'macros.html' as macros %}
 {% block title %}Home{% endblock %}
-{% block leftbody %}
+{% block content %}
     {{ macros.render_posts(posts) }}
     {# {{ macros.render_pagination(posts, 'home') }} #}
 {% endblock %}
