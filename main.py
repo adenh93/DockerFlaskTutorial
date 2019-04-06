@@ -6,6 +6,7 @@ from flask_wtf import FlaskForm as Form
 from wtforms import StringField, TextAreaField
 from wtforms.validators import DataRequired, Length
 from config import DevConfig
+import timeago
 from datetime import datetime
  
 app = Flask(__name__) 
@@ -135,6 +136,7 @@ def post(post_id):
     recent=recent,
     top_tags=top_tags,
     comments=comments,
+    timeago=timeago,
     form=form
   )
 

@@ -81,6 +81,18 @@
     border-radius: 3px;
 }
 
+.comment-header {
+    background-color: rgb(245, 245, 245);
+    border: 1px solid lightgray;
+    border-radius: 3px;
+    padding: 5px;
+}
+
+.comment-body {
+    margin-top: 5px;
+    margin-left: 10px;
+}
+
 .comment-container {
     margin-top: 10px;
 }
