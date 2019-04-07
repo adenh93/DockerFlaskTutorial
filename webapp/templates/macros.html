@@ -49,7 +49,7 @@
     {% for post in _posts %}
         <div class="card post-card">
             <div class="card-content">
-                <img class="card-img-top" src="{{url_for('static', filename='img/coffee.jpg')}}">
+                <img class="card-img-top" src="{{url_for('.static', filename='img/coffee.jpg')}}">
                 <div class="card-body">
                     <p><small><i>Aden Herold - {{post.created_date.strftime('%B %d, %Y')}}</i></small></p>
                     <h5 class="card-title" style="font-weight: bold"><a href="{{ url_for('blog.post', post_id=post.id) }}">{{ post.title }}</a></h5>

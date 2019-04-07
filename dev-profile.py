@@ -1,4 +1,4 @@
-from main import User, Post, Tag, db
+from webapp.blog.models import User, Post, Tag, db
 from faker import Faker
 
 faker = Faker()
