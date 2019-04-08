@@ -1,7 +1,7 @@
 import functools
 from flask import flash, redirect, url_for, session, abort
 from flask_login import current_user
-# from flask_openid import OpenID
+from flask_openid import OpenID
 # from flask_dance.contrib.twitter import make_twitter_blueprint,  twitter
 # from flask_dance.contrib.facebook import make_facebook_blueprint, facebook
 # from flask_dance.consumer import oauth_authorized
@@ -16,7 +16,7 @@ class BlogAnonymous(AnonymousUserMixin):
 
 
 bcrypt = Bcrypt()
-# oid = OpenID()
+oid = OpenID()
 
 login_manager = LoginManager()
 login_manager.login_view = "auth.login"

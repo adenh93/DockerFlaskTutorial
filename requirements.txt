@@ -2,5 +2,6 @@ flask-sqlalchemy
 Flask-Migrate
 Flask-WTF
 Flask-Login
+Flask-OpenID
 flask-bcrypt
 Faker
