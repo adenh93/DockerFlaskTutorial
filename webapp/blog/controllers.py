@@ -44,13 +44,15 @@ def post(post_id):
       return redirect(url_for('blog.post', post_id=post_id))
 
   post = Post.query.get_or_404(post_id)
+  user = User.query.get(post.user_id)
   comments = post.comments.order_by(Comment.created_date.desc()).all()
   return render_template(
     'post.html',
     post=post,
     comments=comments,
     timeago=timeago,
-    form=form
+    form=form,
+    name=user.name
   )
 
 
