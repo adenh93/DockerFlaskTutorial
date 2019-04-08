@@ -2,12 +2,17 @@ import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+
 class Config(object): 
     POSTS_PER_PAGE = 15
- 
+    RECAPTCHA_PUBLIC_KEY = "6LesqJwUAAAAAHwYA5459Zxsj373s80Fo7b9V7YW"
+    RECAPTCHA_PRIVATE_KEY = "6LesqJwUAAAAANWhDTxkIOBFmbp9ytEB3Qd1qYrz"
+
+
 class ProdConfig(Config): 
     pass 
- 
+
+
 class DevConfig(Config): 
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'temp/TestDatabase.db')

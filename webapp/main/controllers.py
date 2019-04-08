@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, url_for, render_template
+from flask import Blueprint, redirect, url_for
 
 main_blueprint = Blueprint(
     'main',
@@ -6,6 +6,7 @@ main_blueprint = Blueprint(
     template_folder='../templates/main',
     static_folder='../../static'
 )
+
 
 @main_blueprint.route('/')
 def index():

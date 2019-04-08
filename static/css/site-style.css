@@ -24,18 +24,7 @@
 
 .navbar-brand {
     float: none;
-}
-  
-.navbar-center {
-    position: absolute;
-    width: 100%;
-    left: 0;
-    top: 15%;
-    text-align: center;
-    margin: auto;
-    height:100%;
-}
-  
+} 
 
 .content {
     background-color: #f9f8fd;

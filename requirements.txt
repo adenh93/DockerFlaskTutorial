@@ -1,4 +1,6 @@
 flask-sqlalchemy
 Flask-Migrate
 Flask-WTF
+Flask-Login
+flask-bcrypt
 Faker
