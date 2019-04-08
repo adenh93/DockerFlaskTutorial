@@ -15,7 +15,7 @@ db = SQLAlchemy(metadata=MetaData(naming_convention=naming_convention))
 migrate = Migrate()
 
 def page_not_found(error):
-    return render_template('blog/404.html'), 404
+    return render_template('404.html'), 404
 
 
 def create_app(object_name):
