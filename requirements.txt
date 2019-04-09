@@ -4,5 +4,7 @@ Flask-WTF
 Flask-Login
 flask-bcrypt
 flask-openid
+flask-dance
+blinker
 Faker
 timeago

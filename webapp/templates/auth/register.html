@@ -63,9 +63,7 @@
                 </div>
                 <input class="btn btn-primary" type="submit" value="Register">
             </form>
-        </div>
-        <hr>
-        <div class="col-md-12">
+            <hr>
             <h3>Register With OpenID</h3>
             <form method="POST" action="{{ url_for('auth.register') }}">
                 {{ openid_form.hidden_tag() }}
@@ -80,6 +78,12 @@
                 </div>
                 <input class="btn btn-primary" type="submit" value="Register">
             </form>
+            <hr>
+            <h3>Register/Login With Facebook</h3>
+            <a href="{{ url_for('facebook.login') }}">Login</a>
+            <hr>    
+            <h3>Register/Login With Twitter</h3>
+            <a href="{{ url_for('twitter.login') }}">Login</a>
         </div>
     </div>
 {% endblock %}
