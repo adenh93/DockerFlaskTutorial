@@ -1,7 +1,7 @@
 import functools
 from flask import flash, redirect, url_for, session, abort
 from flask_login import current_user
-# from flask_openid import OpenID
+from flask_openid import OpenID
 # from flask_dance.contrib.twitter import make_twitter_blueprint,  twitter
 # from flask_dance.contrib.facebook import make_facebook_blueprint, facebook
 # from flask_dance.consumer import oauth_authorized
@@ -16,7 +16,7 @@ class BlogAnonymous(AnonymousUserMixin):
 
 
 bcrypt = Bcrypt()
-# oid = OpenID()
+oid = OpenID()
 
 login_manager = LoginManager()
 login_manager.login_view = "auth.login"
@@ -28,7 +28,7 @@ login_manager.anonymous_user = BlogAnonymous
 
 def create_module(app, **kwargs):
     bcrypt.init_app(app)
-    # oid.init_app(app)
+    oid.init_app(app)
     login_manager.init_app(app)
 
     # twitter_blueprint = make_twitter_blueprint(
@@ -64,20 +64,19 @@ def load_user(userid):
     return User.query.get(userid)
 
 
-# @oid.after_login
-# def create_or_login(resp):
-#     from .models import db, User
-#     username = resp.fullname or resp.nickname or resp.email
-#     if not username:
-#         flash('Invalid login. Please try again.', 'danger')
-#         return redirect(url_for('auth.login'))
-#     user = User.query.filter_by(username=username).first()
-#     if user is None:
-#         user = User(username)
-#         db.session.add(user)
-#         db.session.commit()
-#     login_user(user)
-#     return redirect(url_for('main.index'))
+@oid.after_login
+def create_or_login(resp):
+    from .models import db, User
+    if not resp.username:
+        flash('Invalid login. Please try again.', 'danger')
+        return redirect(url_for('auth.login'))
+    user = User.query.filter_by(username=resp.username).first()
+    if user is None:
+        user = User(resp.username, resp.email, resp.fullname)
+        db.session.add(user)
+        db.session.commit()
+    login_user(user)
+    return redirect(url_for('main.index'))
 
 
 # @oauth_authorized.connect

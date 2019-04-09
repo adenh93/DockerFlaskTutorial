@@ -3,4 +3,6 @@ Flask-Migrate
 Flask-WTF
 Flask-Login
 flask-bcrypt
+flask-openid
 Faker
+timeago
