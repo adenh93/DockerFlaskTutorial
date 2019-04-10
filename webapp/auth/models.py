@@ -28,7 +28,7 @@ class User(db.Model):
         self.username = username
         self.name = name
         self.email = email
-        default = Role.query.filter_by(name="bloguser").one()
+        default = Role.query.filter_by(name="blogposter").one()
         self.roles.append(default)
         
     def has_role(self, name):
