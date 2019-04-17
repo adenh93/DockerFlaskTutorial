@@ -88,3 +88,15 @@ class PostApi(Resource):
         db.session.commit()
         return {'id': post.id}, 201
 
+    @jwt_required
+    def delete(self, post_id=None):
+        if not post_id:
+            abort(4004)
+        post = Post.query.get(post_id)
+        if not post:
+            abort(404)
+        if get_jwt_identity() != post.user_id:
+            abort(401)
+        db.session.delete(post)
+        db.session.commit()
+        return "", 204
