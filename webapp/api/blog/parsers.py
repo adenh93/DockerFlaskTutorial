@@ -29,3 +29,21 @@ post_post_parser.add_argument(
     action='append',
     location=('json', 'values')
 )
+
+post_put_parser = reqparse.RequestParser()
+post_put_parser.add_argument(
+    'title',
+    type=str,
+    location=('json', 'values')
+)
+post_put_parser.add_argument(
+    'body',
+    type=str,
+    location=('json', 'values')
+)
+post_put_parser.add_argument(
+    'tags',
+    type=str,
+    action='append',
+    location=('json', 'values')
+)
