@@ -5,7 +5,7 @@ from flask import jsonify, request, abort, current_app
 from webapp.blog.models import db, Post, Tag
 from webapp.auth.models import User
 from .fields import HTMLField
-from .parsers import post_get_parser
+from .parsers import post_get_parser, post_post_parser
 
 nested_tag_fields = {
     'id': fields.Integer(),
@@ -19,6 +19,17 @@ post_fields = {
     'tags': fields.List(fields.Nested(nested_tag_fields)),
     'created_date': fields.DateTime(dt_format='iso8601')
 }
+
+def add_tags_to_post(post, tags_list):
+    for item in tags_list:
+        tag = Tag.query.filter_by(title=item).first()
+
+        if tag:
+            post.tags.append(tag)
+        else:
+            new_tag = Tag(item)
+            post.tags.append(new_tag)
+
 
 class PostApi(Resource):
     @marshal_with(post_fields)
@@ -44,4 +55,17 @@ class PostApi(Resource):
                     Post.created_date.desc() 
                 ).paginate(page, current_app.config.get('POSTS_PER_PAGE', 10))
             return posts.items
+    
+    @jwt_required
+    def post(self, post_id=None):  
+        args = post_post_parser.parse_args(strict=True) 
+        new_post = Post(args['title'])
+        new_post.user_id = get_jwt_identity()
+        new_post.body = args['body'] 
+        if args['tags']:
+            add_tags_to_post(new_post, args['tags']) 
+        db.session.add(new_post) 
+        db.session.commit()
+        return {'id': new_post.id}, 201
+
 

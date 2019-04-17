@@ -24,6 +24,9 @@ class Post(db.Model):
       backref=db.backref('posts', lazy='dynamic')
     )
 
+    def __init__(self, title):
+      self.title = title
+
 
 class Comment(db.Model):
     id = db.Column(db.Integer(), primary_key=True)

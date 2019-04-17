@@ -2,15 +2,9 @@ import functools
 from flask import flash, redirect, url_for, session, abort
 from flask_login import current_user
 from flask_openid import OpenID
-<<<<<<< HEAD
-# from flask_dance.contrib.twitter import make_twitter_blueprint,  twitter
-# from flask_dance.contrib.facebook import make_facebook_blueprint, facebook
-# from flask_dance.consumer import oauth_authorized
-=======
 from flask_dance.contrib.twitter import make_twitter_blueprint,  twitter
 from flask_dance.contrib.facebook import make_facebook_blueprint, facebook
 from flask_dance.consumer import oauth_authorized
->>>>>>> 5259ea8f6968674042717af8ba6b3190f800ef86
 from flask_login import LoginManager, login_user
 from flask_bcrypt import Bcrypt
 from flask_login import AnonymousUserMixin
@@ -24,10 +18,7 @@ class BlogAnonymous(AnonymousUserMixin):
 
 bcrypt = Bcrypt()
 oid = OpenID()
-<<<<<<< HEAD
-=======
 jwt = JWTManager()
->>>>>>> 5259ea8f6968674042717af8ba6b3190f800ef86
 
 login_manager = LoginManager()
 login_manager.login_view = "auth.login"
