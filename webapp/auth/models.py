@@ -1,6 +1,11 @@
 from . import bcrypt, AnonymousUserMixin
 from .. import db
 
+roles = db.Table(
+    'role_users',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('role_id', db.Integer, db.ForeignKey('role.id'))
+)
 
 class User(db.Model): 
     id = db.Column(db.Integer(), primary_key=True) 
@@ -12,12 +17,25 @@ class User(db.Model):
         'Post',
         backref='user',
         lazy='dynamic'
+    ),
+    roles = db.relationship(
+        'Role',
+        secondary=roles,
+        backref=db.backref('users', lazy='dynamic')
     )
 
     def __init__(self, username, name, email):
         self.username = username
         self.name = name
         self.email = email
+        default = Role.query.filter_by(name="blogposter").one()
+        self.roles.append(default)
+        
+    def has_role(self, name):
+        for role in self.roles:
+            if role.name == name:
+                return True
+            return False
 
     @property
     def is_authenticated(self):
@@ -35,4 +53,14 @@ class User(db.Model):
     
     def check_password(self, password):
         return bcrypt.check_password_hash(self.password, password)
+
+
+class Role(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(80), unique=True)
+    description = db.Column(db.String(255))
+
+    def __init__(self, name):
+        self.name = name
+
 

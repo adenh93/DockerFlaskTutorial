@@ -2,6 +2,11 @@ flask-sqlalchemy
 Flask-Migrate
 Flask-WTF
 Flask-Login
-Flask-OpenID
+Flask-Restful
 flask-bcrypt
+flask-openid
+flask-dance
+flask-jwt-extended
+blinker
 Faker
+timeago

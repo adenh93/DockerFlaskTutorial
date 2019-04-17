@@ -1,6 +1,7 @@
 from flask import render_template, Blueprint, flash, redirect, url_for, current_app, abort
 from flask_login import login_required, current_user
 from .models import db, Post, Tag, Comment
+from ..auth import has_role
 from ..auth.models import User
 from .forms import CommentForm, PostForm
 import timeago
@@ -12,7 +13,6 @@ blog_blueprint = Blueprint(
   static_folder='../../static',
   url_prefix="/blog"
 )
-
 
 @blog_blueprint.route('/')
 @blog_blueprint.route('/<int:page>')
@@ -58,6 +58,7 @@ def post(post_id):
 
 @blog_blueprint.route('/new', methods=['GET', 'POST'])
 @login_required
+@has_role('blogposter')
 def new_post():
   form = PostForm()
   if form.validate_on_submit(): 
@@ -77,9 +78,10 @@ def new_post():
 
 @blog_blueprint.route('/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
+@has_role('blogposter')
 def edit_post(id):
   post = Post.query.get_or_404(id)
-  if current_user.id == post.user.id:
+  if current_user.id == post.user_id:
     form = PostForm()
     if form.validate_on_submit():
         post.title = form.title.data
