@@ -14,7 +14,6 @@ blog_blueprint = Blueprint(
   url_prefix="/blog"
 )
 
-
 @blog_blueprint.route('/')
 @blog_blueprint.route('/<int:page>')
 def home(page=1):
