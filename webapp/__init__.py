@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from flask_migrate import Migrate
+from flask_celery import Celery
 
 naming_convention = {
     "ix": 'ix_%(column_0_label)s',
@@ -13,6 +14,7 @@ naming_convention = {
 
 db = SQLAlchemy(metadata=MetaData(naming_convention=naming_convention))
 migrate = Migrate()
+celery = Celery()
 
 def page_not_found(error):
     return render_template('404.html'), 404
@@ -26,6 +28,7 @@ def create_app(object_name):
     app.config.from_object(object_name)
     db.init_app(app)
     migrate.init_app(app, db, render_as_batch=True)
+    celery.init_app(app)
     from .auth import create_module as auth_create_module
     from .blog import create_module as blog_create_module
     from .main import create_module as main_create_module

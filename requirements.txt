@@ -1,12 +1,14 @@
+blinker
+celery[redis]
 flask-sqlalchemy
 Flask-Migrate
 Flask-WTF
 Flask-Login
 Flask-Restful
+Flask-Celery-Helper
 flask-bcrypt
 flask-openid
 flask-dance
 flask-jwt-extended
-blinker
 Faker
 timeago
