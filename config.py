@@ -1,4 +1,5 @@
 import os
+import datetime
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -22,4 +23,4 @@ class DevConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'temp/TestDatabase.db')
     SECRET_KEY = '\x17\xa5\xe8\xb7)\xde\xcd4\x9fQ\xe9\x8c\x11VT\x7f\x80\xab\xab1\xea\x1f\x17\xa1'
     CELERY_BROKER_URL = "redis://password@localhost/0" 
-    CELERY_RESULT_BACKEND = "redis://password@localhost/0"  
+    CELERY_RESULT_BACKEND = "redis://password@localhost/0"

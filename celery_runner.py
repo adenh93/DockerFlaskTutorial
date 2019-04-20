@@ -1,6 +1,7 @@
 import os
 from webapp import create_app
 from celery import Celery
+from webapp.blog.tasks import log
 
 
 def make_celery(app):
