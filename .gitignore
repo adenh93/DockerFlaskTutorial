@@ -6,3 +6,5 @@
 ./tmp
 ./build/*
 env
+celerybeat-schedule
+celerybeat.pid

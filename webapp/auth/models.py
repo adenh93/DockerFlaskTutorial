@@ -17,7 +17,7 @@ class User(db.Model):
         'Post',
         backref='user',
         lazy='dynamic'
-    ),
+    )
     roles = db.relationship(
         'Role',
         secondary=roles,
