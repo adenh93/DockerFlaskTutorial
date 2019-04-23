@@ -11,7 +11,7 @@ class User(db.Model):
     id = db.Column(db.Integer(), primary_key=True) 
     username = db.Column(db.String(255), nullable=False, index=True, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True) 
-    name = db.Column(db.String(255), nullable=False)
+    name = db.Column(db.String(255))
     password = db.Column(db.String(255))
     posts = db.relationship(
         'Post',
@@ -24,9 +24,8 @@ class User(db.Model):
         backref=db.backref('users', lazy='dynamic')
     )
 
-    def __init__(self, username, name, email):
+    def __init__(self, username, email):
         self.username = username
-        self.name = name
         self.email = email
         default = Role.query.filter_by(name="blogposter").one()
         self.roles.append(default)

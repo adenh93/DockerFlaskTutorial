@@ -10,5 +10,6 @@ flask-bcrypt
 flask-openid
 flask-dance
 flask-jwt-extended
+Click
 Faker
 timeago
