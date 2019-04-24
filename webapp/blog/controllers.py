@@ -1,6 +1,7 @@
 from flask import render_template, Blueprint, flash, redirect, url_for, current_app, abort
 from flask_login import login_required, current_user
 from .models import db, Post, Tag, Comment
+from .. import cache
 from ..auth import has_role
 from ..auth.models import User
 from .forms import CommentForm, PostForm
@@ -16,6 +17,7 @@ blog_blueprint = Blueprint(
 
 @blog_blueprint.route('/')
 @blog_blueprint.route('/<int:page>')
+@cache.cached(timeout=60)
 def home(page=1):
   posts = Post.query.order_by(Post.created_date.desc()).paginate(page, current_app.config.get('POSTS_PER_PAGE', 15), False)
   return render_template(

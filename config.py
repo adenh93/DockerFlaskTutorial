@@ -16,7 +16,7 @@ class Config(object):
     FACEBOOK_CLIENT_SECRET = "YYYY"
 
 class ProdConfig(Config): 
-    pass 
+    CACHE_TYPE = 'simple'
 
 
 class DevConfig(Config): 
@@ -26,6 +26,7 @@ class DevConfig(Config):
     CELERY_BROKER_URL = "redis://password@localhost/0" 
     CELERY_RESULT_BACKEND = "redis://password@localhost/0"
     CELERYBEAT_SCHEDULE = { 'weekly-digest': { 'task': 'blog.tasks.digest', 'schedule': crontab(day_of_week=6, hour='10') }, }
+    CACHE_TYPE = 'null'
     SMTP_SERVER = "smtp.gmail.com"
     SMTP_USER = "sometestemail@gmail.com"
     SMTP_PASSWORD = "password"

@@ -6,6 +6,7 @@ Flask-WTF
 Flask-Login
 Flask-Restful
 Flask-Celery-Helper
+Flask-Caching
 flask-bcrypt
 flask-openid
 flask-dance
