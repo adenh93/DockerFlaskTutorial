@@ -31,3 +31,4 @@ class DevConfig(Config):
     SMTP_USER = "sometestemail@gmail.com"
     SMTP_PASSWORD = "password"
     SMTP_FROM = "from@flask.com"
+    ASSETS_DEBUG = True

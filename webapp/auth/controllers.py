@@ -9,7 +9,7 @@ auth_blueprint = Blueprint(
     'auth',
     __name__,
     template_folder='../templates/auth',
-    static_folder='../../static',
+    static_folder='../static',
     url_prefix="/auth"
 )
 

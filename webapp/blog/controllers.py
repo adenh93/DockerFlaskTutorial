@@ -11,7 +11,7 @@ blog_blueprint = Blueprint(
   'blog',
   __name__,
   template_folder='../templates/blog',
-  static_folder='../../static',
+  static_folder='../static',
   url_prefix="/blog"
 )
 

@@ -7,6 +7,9 @@ Flask-Login
 Flask-Restful
 Flask-Celery-Helper
 Flask-Caching
+Flask-Assets
+cssmin
+jsmin
 flask-bcrypt
 flask-openid
 flask-dance

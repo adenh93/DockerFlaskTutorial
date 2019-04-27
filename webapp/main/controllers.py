@@ -4,7 +4,7 @@ main_blueprint = Blueprint(
     'main',
     __name__,
     template_folder='../templates/main',
-    static_folder='../../static'
+    static_folder='../static'
 )
 
 
